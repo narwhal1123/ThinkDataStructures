@@ -45,7 +45,15 @@ public class MyArrayList<T> implements List<T> {
 	@Override
 	public boolean add(T element) {
 		// TODO: FILL THIS IN!
-		return false;
+		// 크기가 작으면 2배짜리 새로 만든다
+		if (size >= array.length) {
+			T[] bigger = (T[]) new Object[array.length * 2];
+			System.arraycopy(array, 0, bigger, 0, array.length);
+			array = bigger;
+		}
+		array[size] = element;
+		size++;		
+		return true;
 	}
 
 	@Override
@@ -57,8 +65,8 @@ public class MyArrayList<T> implements List<T> {
 		add(element);
 
 		// shift the elements
-		for (int i=size-1; i>index; i--) {
-			array[i] = array[i-1];
+		for (int i = size - 1; i > index; i--) {
+			array[i] = array[i - 1];
 		}
 		// put the new one in the right place
 		array[index] = element;
@@ -111,6 +119,12 @@ public class MyArrayList<T> implements List<T> {
 	@Override
 	public int indexOf(Object target) {
 		// TODO: FILL THIS IN!
+		for (int i = 0; i < size; i++) {
+//			if (array[i] == target) {  // 이렇게 쓰면 테스트중 오류 발생 아래가 더 명확한 비교이긴 한듯
+			if(equals(target, array[i])){
+				return i;
+			}
+		}
 		return -1;
 	}
 
@@ -182,7 +196,15 @@ public class MyArrayList<T> implements List<T> {
 	@Override
 	public T remove(int index) {
 		// TODO: FILL THIS IN!
-		return null;
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+		T temp = get(index);
+		for (int i = index; i < size - 1; i++) {
+			array[i] = array[i + 1];
+		}
+		size--;
+		return temp;
 	}
 
 	@Override
@@ -202,7 +224,12 @@ public class MyArrayList<T> implements List<T> {
 	@Override
 	public T set(int index, T element) {
 		// TODO: FILL THIS IN!
-		return null;
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+		T temp = array[index];
+		array[index] = element;
+		return temp;
 	}
 
 	@Override

@@ -83,6 +83,16 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public void add(int index, E element) {
 		//TODO: FILL THIS IN!
+		if (index == 0) {
+			head = new Node(element, head);
+		} else {
+			Node node = head;
+			for (int i = 0; i < index - 1; i++) {
+				node = node.next;
+			}
+			node.next = new Node(element, node.next);
+		}
+		size++;
 	}
 
 	@Override
@@ -144,7 +154,17 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public int indexOf(Object target) {
 		//TODO: FILL THIS IN!
-		return -1;
+		Node node = head;
+		int index = -1;
+		for (int i = 0; i < size; i++) {
+			if (!equals(node.data, target)) {
+				node = node.next;
+			} else {
+				index = i;
+				break;
+			}
+		}
+		return index;
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -209,7 +229,14 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public E remove(int index) {
 		//TODO: FILL THIS IN!
-		return null;
+		E data = getNode(index).data;
+		if (index == 0) {
+			head = head.next;
+		} else {
+			getNode(index - 1).next = getNode(index + 1);
+		}
+		size--;
+		return data;
 	}
 
 	@Override
