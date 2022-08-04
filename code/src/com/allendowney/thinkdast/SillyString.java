@@ -27,6 +27,7 @@ public class SillyString {
 
 	@Override
 	public int hashCode() {
+		// char를 숫자로 변환해서 더함 -> 같은값 나올 수 있다.
 		int total = 0;
 		for (int i=0; i<innerString.length(); i++) {
 			total += innerString.charAt(i);

@@ -56,7 +56,26 @@ public class WikiCrawler {
 	 */
 	public String crawl(boolean testing) throws IOException {
 		// TODO: FILL THIS IN!
-        return null;
+		if (queue.isEmpty()) {
+			return null;
+		}
+		String url = queue.poll();
+		System.out.println("Crawling " + url);
+
+		if (testing==false && index.isIndexed(url)) {
+			System.out.println("Already indexed.");
+			return null;
+		}
+
+		Elements paragraphs;
+		if (testing) {
+			paragraphs = wf.readWikipedia(url);
+		} else {
+			paragraphs = wf.fetchWikipedia(url);
+		}
+		index.indexPage(url, paragraphs);
+		queueInternalLinks(paragraphs);
+		return url;
 	}
 
 	/**

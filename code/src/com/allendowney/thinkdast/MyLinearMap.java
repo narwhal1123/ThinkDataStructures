@@ -64,6 +64,11 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	 */
 	private Entry findEntry(Object target) {
 		// TODO: FILL THIS IN!
+		for (Entry entry: entries) {
+			if (equals(target, entry.getKey())) {
+				return entry;
+			}
+		}
 		return null;
 	}
 
@@ -99,7 +104,12 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V get(Object key) {
 		// TODO: FILL THIS IN!
-		return null;
+		// 키에 해당하는 값 리턴, 없으면 null
+		Entry entry = findEntry(key);
+		if (entry == null) {
+			return null;
+		}
+		return entry.getValue();
 	}
 
 	@Override
@@ -119,7 +129,17 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V put(K key, V value) {
 		// TODO: FILL THIS IN!
-		return null;
+		// 해당 키에 값이 없으면 그 키와 값을 만들어 넣고, 값이 있으면 값을 업데이트
+		// 리턴은 이전에 있던 값, 값이 없었으면 null
+		Entry entry = findEntry(key);
+		if (entry == null) {
+			entries.add(new Entry(key, value));
+			return null;
+		} else {
+			V oldValue = entry.getValue();
+			entry.setValue(value);
+			return oldValue;
+		}
 	}
 
 	@Override
@@ -132,7 +152,14 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V remove(Object key) {
 		// TODO: FILL THIS IN!
-		return null;
+		Entry entry = findEntry(key);
+		if (entry == null) {
+			return null;
+		} else {
+			V value = entry.getValue();
+			entries.remove(entry);
+			return value;
+		}
 	}
 
 	@Override
