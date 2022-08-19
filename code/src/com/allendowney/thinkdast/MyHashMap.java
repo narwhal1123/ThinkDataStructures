@@ -41,7 +41,14 @@ public class MyHashMap<K, V> extends MyBetterMap<K, V> implements Map<K, V> {
 	 */
 	protected void rehash() {
 		// TODO: FILL THIS IN!
+		List<MyLinearMap<K, V>> oldMaps = maps; // 이전 값 저장
+		makeMaps(size() * 2); // 두배크기로 새로 만듦
 
+		for (MyLinearMap<K, V> map: oldMaps) { // 이전 값 집어 넣음
+			for (Map.Entry<K, V> entry: map.getEntries()) {
+				put(entry.getKey(), entry.getValue());
+			}
+		}
 	}
 
 	/**

@@ -26,8 +26,8 @@ public class MyTreeMapExample {
 	 * @param n 
 	 */
 	private static void putRandomStrings(int n) {
-		// MyTreeMap<String, Integer> map = new MyTreeMap<String, Integer>();
-		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
+		 MyTreeMap<String, Integer> map = new MyTreeMap<String, Integer>();
+//		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
 		
 		final long startTime = System.currentTimeMillis();		
 		for (int i=0; i<n; i++) {
@@ -35,8 +35,8 @@ public class MyTreeMapExample {
 			map.put(uuid, 0);
 		}
 		final long elapsed = System.currentTimeMillis() - startTime;
-		//printResults(map, elapsed, map.height());
-		printResults(map, elapsed, -1);
+		printResults(map, elapsed, map.height());
+//		printResults(map, elapsed, -1);
 	}
 	
 	/**
@@ -44,8 +44,8 @@ public class MyTreeMapExample {
 	 * @param n 
 	 */
 	private static void putTimestamps(int n) {
-		//MyTreeMap<String, Integer> map = new MyTreeMap<String, Integer>();
-		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
+		MyTreeMap<String, Integer> map = new MyTreeMap<String, Integer>();
+//		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
 
 		final long startTime = System.currentTimeMillis();		
 		for (int i=0; i<n; i++) {
@@ -53,8 +53,8 @@ public class MyTreeMapExample {
 			map.put(timestamp, 0);
 		}
 		final long elapsed = System.currentTimeMillis() - startTime;
-		//printResults(map, elapsed, map.height());
-		printResults(map, elapsed, -1);
+		printResults(map, elapsed, map.height());
+//		printResults(map, elapsed, -1);
 	}
 	
 	/**

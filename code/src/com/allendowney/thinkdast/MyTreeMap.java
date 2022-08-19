@@ -72,6 +72,16 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 		Comparable<? super K> k = (Comparable<? super K>) target;
 
 		// TODO: FILL THIS IN!
+		Node node = root;
+		while (node != null) {
+			int cmp = k.compareTo(node.key); // k와 node.key를 비교(근데 compareTo를 어디서 구현해놓은건데?)
+			if (cmp < 0) // 비교값이 더 작으면 왼쪽으로
+				node = node.left;
+			else if (cmp > 0) // 비교값이 더 크면 오른쪽으로
+				node = node.right;
+			else
+				return node;
+		}
 		return null;
 	}
 
@@ -96,6 +106,18 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 
 	private boolean containsValueHelper(Node node, Object target) {
 		// TODO: FILL THIS IN!
+		if (node == null) {
+			return false;
+		}
+		if (equals(target, node.value)) {
+			return true;
+		}
+		if (containsValueHelper(node.left, target)) { // 재귀적으로
+			return true;
+		}
+		if (containsValueHelper(node.right, target)) { // 재귀적으로
+			return true;
+		}
 		return false;
 	}
 
@@ -122,7 +144,15 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 	public Set<K> keySet() {
 		Set<K> set = new LinkedHashSet<K>();
 		// TODO: FILL THIS IN!
+		addInOrder(root, set);
 		return set;
+	}
+
+	private void addInOrder(Node node, Set<K> set) {
+		if (node == null) return;
+		addInOrder(node.left, set);
+		set.add(node.key);
+		addInOrder(node.right, set);
 	}
 
 	@Override
@@ -140,7 +170,32 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 
 	private V putHelper(Node node, K key, V value) {
 		// TODO: FILL THIS IN!
-		return null;
+		Comparable<? super K> k = (Comparable<? super K>) key;
+		int cmp = k.compareTo(node.key);
+
+		// 값에 맞는 노드를 재귀적으로 찾아감
+		if (cmp < 0) {
+			if (node.left == null) {
+				node.left = new Node(key, value);
+				size++;
+				return null;
+			} else {
+				return putHelper(node.left, key, value);
+			}
+		}
+		if (cmp > 0) {
+			if (node.right == null) {
+				node.right = new Node(key, value);
+				size++;
+				return null;
+			} else {
+				return putHelper(node.right, key, value);
+			}
+		}
+		// 값 넣어줌
+		V oldValue = node.value;
+		node.value = value;
+		return oldValue;
 	}
 
 	@Override
@@ -235,5 +290,10 @@ public class MyTreeMap<K, V> implements Map<K, V> {
 		int left = heightHelper(node.left);
 		int right = heightHelper(node.right);
 		return Math.max(left, right) + 1;
+	}
+
+	@Override
+	public boolean remove(Object key, Object value) {
+		return Map.super.remove(key, value);
 	}
 }

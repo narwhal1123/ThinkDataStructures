@@ -13,7 +13,7 @@ public class ProfileMapPut {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//profileHashMapPut();
+//		profileHashMapPut();
 		//profileMyHashMapPut();
 		profileMyFixedHashMapPut();
 	}
@@ -26,7 +26,7 @@ public class ProfileMapPut {
 			Map<String, Integer> map;
 
 			public void setup(int n) {
-				map = new HashMap<String, Integer>();
+				map = new MyHashMap<String, Integer>();
 			}
 
 			public void timeMe(int n) {
@@ -36,7 +36,7 @@ public class ProfileMapPut {
 			}
 		};
 		int startN = 8000;
-		int endMillis = 1000;
+		int endMillis = 100000;
 		runProfiler("HashMap put", timeable, startN, endMillis);
 	}
 	
